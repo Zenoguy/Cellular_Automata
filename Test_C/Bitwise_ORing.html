@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bitwise ORing Demo</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #4fc3f7;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .step {
+            background: rgba(255, 255, 255, 0.05);
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #4fc3f7;
+        }
+        
+        .step h3 {
+            color: #81c784;
+            margin-top: 0;
+        }
+        
+        .binary-demo {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 15px;
+            align-items: center;
+            margin: 15px 0;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+        }
+        
+        .bit-box {
+            display: inline-block;
+            padding: 8px 12px;
+            margin: 0 2px;
+            background: #ff6b6b;
+            color: white;
+            border-radius: 5px;
+            font-weight: bold;
+            text-align: center;
+            min-width: 25px;
+        }
+        
+        .bit-box.zero {
+            background: #4ecdc4;
+        }
+        
+        .bit-box.result {
+            background: #45b7d1;
+        }
+        
+        .operation {
+            font-size: 18px;
+            font-weight: bold;
+            color: #ffd93d;
+        }
+        
+        .interactive-section {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 25px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        label {
+            color: #b0bec5;
+            font-size: 14px;
+        }
+        
+        input, select {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .result-display {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .highlight {
+            background: rgba(255, 235, 59, 0.3);
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        
+        .rule-table {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .rule-cell {
+            text-align: center;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            border: 2px solid transparent;
+        }
+        
+        .rule-cell.active {
+            border-color: #4fc3f7;
+            background: rgba(79, 195, 247, 0.2);
+        }
+        
+        .pattern-bits {
+            color: #ffd93d;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔢 Bitwise ORing in Cellular Automata</h1>
+        
+        <div class="step">
+            <h3>Understanding the Pattern Creation</h3>
+            <p>The line <code>int pattern = (left << 2) | (self << 1) | right;</code> creates a 3-bit number from three neighboring cells:</p>
+            
+            <div class="binary-demo" id="pattern-demo">
+                <div>
+                    <div>left = <span class="bit-box" id="left-val">1</span></div>
+                    <div>self = <span class="bit-box" id="self-val">0</span></div>
+                    <div>right = <span class="bit-box" id="right-val">1</span></div>
+                </div>
+                <div class="operation">→</div>
+                <div>
+                    <div>left << 2 = <span class="bit-box result" id="left-shifted">100</span></div>
+                    <div>self << 1 = <span class="bit-box result" id="self-shifted">000</span></div>
+                    <div>right = <span class="bit-box result" id="right-same">001</span></div>
+                </div>
+            </div>
+            
+            <div class="binary-demo">
+                <div>OR together:</div>
+                <div class="operation">
+                    <span id="or-calculation">100 | 000 | 001</span>
+                </div>
+                <div>
+                    = <span class="bit-box result" id="final-pattern">101</span> 
+                    (decimal <span id="decimal-pattern">5</span>)
+                </div>
+            </div>
+        </div>
+
+        <div class="step">
+            <h3>Rule Extraction</h3>
+            <p>Then <code>(rule >> pattern) & 1</code> extracts the bit at position 'pattern' from the rule:</p>
+            
+            <div class="result-display">
+                <div>Rule <span id="current-rule">30</span> in binary: <span class="highlight" id="rule-binary">00011110</span></div>
+                <div>Shift right by <span id="shift-amount">5</span> positions: <span id="shifted-rule">00000000</span></div>
+                <div>AND with 1: <span id="final-result">0</span></div>
+            </div>
+        </div>
+
+        <div class="interactive-section">
+            <h3>🎮 Interactive Demo</h3>
+            <div class="controls">
+                <div class="control-group">
+                    <label>Left Cell:</label>
+                    <select id="left-input">
+                        <option value="0">0</option>
+                        <option value="1" selected>1</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>Self Cell:</label>
+                    <select id="self-input">
+                        <option value="0" selected>0</option>
+                        <option value="1">1</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>Right Cell:</label>
+                    <select id="right-input">
+                        <option value="0">0</option>
+                        <option value="1" selected>1</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>Rule Number:</label>
+                    <input type="number" id="rule-input" value="30" min="0" max="255">
+                </div>
+            </div>
+        </div>
+
+        <div class="step">
+            <h3>📊 Complete Rule Table for Current Rule</h3>
+            <p>All possible 3-bit patterns and their outcomes:</p>
+            <div class="rule-table" id="rule-table">
+                <!-- Generated by JavaScript -->
+            </div>
+        </div>
+
+        <div class="step">
+            <h3>💡 Why This Works</h3>
+            <ul>
+                <li><strong>Left shift by 2:</strong> Moves left bit to position 2 (value × 4)</li>
+                <li><strong>Left shift by 1:</strong> Moves self bit to position 1 (value × 2)</li>
+                <li><strong>Right stays:</strong> Remains in position 0 (value × 1)</li>
+                <li><strong>OR operation:</strong> Combines all bits without collision</li>
+                <li><strong>Result:</strong> 3-bit pattern representing neighborhood state</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function updateDemo() {
+            const left = parseInt(document.getElementById('left-input').value);
+            const self = parseInt(document.getElementById('self-input').value);
+            const right = parseInt(document.getElementById('right-input').value);
+            const rule = parseInt(document.getElementById('rule-input').value);
+
+            // Update display values
+            document.getElementById('left-val').textContent = left;
+            document.getElementById('self-val').textContent = self;
+            document.getElementById('right-val').textContent = right;
+            
+            // Calculate shifts
+            const leftShifted = left << 2;
+            const selfShifted = self << 1;
+            const rightSame = right;
+            
+            document.getElementById('left-shifted').textContent = leftShifted.toString(2).padStart(3, '0');
+            document.getElementById('self-shifted').textContent = selfShifted.toString(2).padStart(3, '0');
+            document.getElementById('right-same').textContent = rightSame.toString(2).padStart(3, '0');
+            
+            // Calculate pattern
+            const pattern = (left << 2) | (self << 1) | right;
+            document.getElementById('final-pattern').textContent = pattern.toString(2).padStart(3, '0');
+            document.getElementById('decimal-pattern').textContent = pattern;
+            
+            // Update OR calculation display
+            document.getElementById('or-calculation').textContent = 
+                `${leftShifted.toString(2).padStart(3, '0')} | ${selfShifted.toString(2).padStart(3, '0')} | ${rightSame.toString(2).padStart(3, '0')}`;
+            
+            // Rule extraction
+            document.getElementById('current-rule').textContent = rule;
+            document.getElementById('rule-binary').textContent = rule.toString(2).padStart(8, '0');
+            document.getElementById('shift-amount').textContent = pattern;
+            
+            const shiftedRule = rule >> pattern;
+            document.getElementById('shifted-rule').textContent = shiftedRule.toString(2).padStart(8, '0');
+            
+            const result = (rule >> pattern) & 1;
+            document.getElementById('final-result').textContent = result;
+            
+            // Update rule table
+            updateRuleTable(rule, pattern);
+        }
+        
+        function updateRuleTable(rule, currentPattern) {
+            const table = document.getElementById('rule-table');
+            table.innerHTML = '';
+            
+            for (let i = 7; i >= 0; i--) {
+                const cell = document.createElement('div');
+                cell.className = 'rule-cell';
+                if (i === currentPattern) {
+                    cell.classList.add('active');
+                }
+                
+                const binaryPattern = i.toString(2).padStart(3, '0');
+                const outcome = (rule >> i) & 1;
+                
+                cell.innerHTML = `
+                    <div class="pattern-bits">${binaryPattern}</div>
+                    <div>→ ${outcome}</div>
+                `;
+                table.appendChild(cell);
+            }
+        }
+        
+        // Event listeners
+        document.getElementById('left-input').addEventListener('change', updateDemo);
+        document.getElementById('self-input').addEventListener('change', updateDemo);
+        document.getElementById('right-input').addEventListener('change', updateDemo);
+        document.getElementById('rule-input').addEventListener('input', updateDemo);
+        
+        // Initial update
+        updateDemo();
+    </script>
+</body>
+</html>
