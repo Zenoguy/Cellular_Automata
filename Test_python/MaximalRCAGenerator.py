@@ -213,7 +213,7 @@ class MaximalRCAGenerator:
         denominator = self.max_states if self.aim_for_full_coverage else min(self.max_states, 10000)
         return len(states_seen) / denominator
     
-    def pick_next_rule_maximal(self, prev_rule: int, current_state: List[int]) -> int:
+    def pick_next_rule_maximal(self, prev_rule: int, current_state: List[int], sequence: List[int]) -> int:
         """
         Pick next rule to maximize state space coverage with improved scoring.
         """
@@ -221,10 +221,13 @@ class MaximalRCAGenerator:
         candidates = [r for r, classes in rule_to_classes.items() if next_class in classes]
         
         if not candidates:
-            raise ValueError(f"No candidate rules for next_class {next_class}")
+            raise ValueError(f"No candidate rules for next_class {next_class} after rule {prev_rule}")
         
         best_rule = None
         best_score = -float('inf')
+        
+        # Debug info
+        debug_scores = {}
         
         for candidate_rule in candidates:
             # Test what new state this rule would produce
@@ -232,44 +235,77 @@ class MaximalRCAGenerator:
             state_tuple = self.state_to_tuple(test_state)
             
             score = 0
+            score_breakdown = {}
             
-            # 1. Coverage bonus (prioritize unvisited states)
+            # 1. Coverage bonus (MUCH stronger emphasis on unvisited states)
             if state_tuple not in self.visited_states:
-                score += self.coverage_bonus
+                coverage_score = self.coverage_bonus * 10.0  # Much higher bonus
+                score += coverage_score
+                score_breakdown['coverage'] = coverage_score
             else:
-                # Small penalty for revisited states, scaled by visit frequency
+                # Heavy penalty for revisited states
                 revisit_count = self.state_history.count(state_tuple)
-                score += self.coverage_bonus * (0.1 / (1 + revisit_count))
+                coverage_score = -self.coverage_bonus * revisit_count  # Negative score for repeats
+                score += coverage_score
+                score_breakdown['coverage'] = coverage_score
             
             # 2. Diversity score (Hamming distance from recent states)
-            if self.state_history:
+            if len(self.state_history) > 0:
                 diversity_score = 0
-                history_len = min(20, len(self.state_history))  # Check more history
+                history_len = min(10, len(self.state_history))
                 for prev_state in self.state_history[-history_len:]:
                     hamming_dist = sum(a != b for a, b in zip(state_tuple, prev_state))
-                    diversity_score += hamming_dist / self.n_cells  # Normalize by state size
+                    diversity_score += hamming_dist
                 
-                # Average diversity over recent history
-                avg_diversity = diversity_score / history_len
-                score += self.diversity_weight * avg_diversity
+                # Normalize and weight
+                avg_diversity = diversity_score / (history_len * self.n_cells)
+                diversity_weighted = self.diversity_weight * avg_diversity * 5.0  # Increase weight
+                score += diversity_weighted
+                score_breakdown['diversity'] = diversity_weighted
             
-            # 3. Full coverage bonus (extra incentive when close to full coverage)
-            if self.aim_for_full_coverage:
-                coverage_ratio = len(self.visited_states) / self.max_states
-                if coverage_ratio > 0.8:  # When we're close to full coverage
-                    full_coverage_bonus = (1 - coverage_ratio) * 2.0
-                    score += full_coverage_bonus
+            # 3. Rule repetition penalty (strongly discourage rule repetition)
+            recent_rules = sequence[-5:]  # Check last 5 rules
+            rule_repeat_count = recent_rules.count(candidate_rule)
+            if rule_repeat_count > 0:
+                repeat_penalty = -self.coverage_bonus * rule_repeat_count * 2.0
+                score += repeat_penalty
+                score_breakdown['rule_repeat'] = repeat_penalty
             
-            # 4. Rule diversity bonus (prefer less-used rules)
-            rule_usage = sum(1 for r in self.state_history if r == candidate_rule)
-            rule_diversity_bonus = 0.05 / (1 + rule_usage)
-            score += rule_diversity_bonus
+            # 4. Consecutive rule penalty (avoid immediate repetition)
+            if len(sequence) > 0 and sequence[-1] == candidate_rule:
+                consecutive_penalty = -self.coverage_bonus * 3.0
+                score += consecutive_penalty
+                score_breakdown['consecutive'] = consecutive_penalty
+            
+            # 5. Rule diversity bonus
+            rule_usage_in_sequence = sequence.count(candidate_rule)
+            if rule_usage_in_sequence == 0:
+                rule_diversity_score = self.coverage_bonus * 0.5  # Bonus for unused rules
+            else:
+                rule_diversity_score = -0.1 * rule_usage_in_sequence  # Small penalty for overused rules
+            score += rule_diversity_score
+            score_breakdown['rule_diversity'] = rule_diversity_score
+            
+            debug_scores[candidate_rule] = {
+                'total_score': score,
+                'breakdown': score_breakdown,
+                'leads_to_new_state': state_tuple not in self.visited_states
+            }
             
             if score > best_score:
                 best_score = score
                 best_rule = candidate_rule
         
-        return best_rule or min(candidates)  # Fallback to deterministic choice
+        # Debug output for the first few iterations
+        if len(sequence) < 10:
+            print(f"\nRule selection after rule {prev_rule} (class -> {next_class}):")
+            for rule, info in sorted(debug_scores.items()):
+                new_state_marker = "🆕" if info['leads_to_new_state'] else "🔄"
+                print(f"  Rule {rule}: {info['total_score']:.2f} {new_state_marker}")
+                if rule == best_rule:
+                    print(f"    ★ SELECTED: {info['breakdown']}")
+        
+        return best_rule or min(candidates)
     
     def generate_maximal_rca(self, R1_class: str, max_length: Optional[int] = None, 
                            initial_strategy: str = "class_based") -> List[int]:
@@ -318,34 +354,43 @@ class MaximalRCAGenerator:
         stagnation_counter = 0
         last_coverage = 0
         best_coverage = 0
+        no_progress_counter = 0
         
         for i in range(1, max_length - 1):
             try:
-                next_rule = self.pick_next_rule_maximal(prev_rule, current_state)
+                next_rule = self.pick_next_rule_maximal(prev_rule, current_state, sequence)
                 sequence.append(next_rule)
                 
                 # Update state
                 current_state = self.ca_step(current_state, next_rule)
                 state_tuple = self.state_to_tuple(current_state)
                 
-                # Advanced stagnation detection
+                # Coverage tracking
                 current_coverage = len(self.visited_states) / (self.max_states if self.aim_for_full_coverage else min(self.max_states, 10000))
                 
+                # Improved stagnation detection
                 if state_tuple in self.visited_states:
                     stagnation_counter += 1
-                    # More aggressive stopping if we're not making coverage progress
-                    if current_coverage == last_coverage:
-                        stagnation_counter += 2  # Extra penalty for no coverage growth
                 else:
-                    stagnation_counter = max(0, stagnation_counter - 1)  # Decay stagnation
+                    stagnation_counter = max(0, stagnation_counter - 2)  # Reduce stagnation faster for progress
                     best_coverage = max(best_coverage, current_coverage)
+                    no_progress_counter = 0  # Reset no progress counter
                 
-                # Break conditions
+                # Track no progress in coverage
+                if current_coverage == last_coverage:
+                    no_progress_counter += 1
+                else:
+                    no_progress_counter = 0
+                
+                # More lenient break conditions
                 if self.aim_for_full_coverage and len(self.visited_states) == self.max_states:
                     print(f"🎉 FULL STATE SPACE COVERAGE achieved at length {len(sequence)}!")
                     break
-                elif stagnation_counter > (100 if self.aim_for_full_coverage else 50):
-                    print(f"Breaking due to stagnation at length {len(sequence)} (coverage: {current_coverage:.4f})")
+                elif stagnation_counter > (200 if self.aim_for_full_coverage else 100):
+                    print(f"Breaking due to state stagnation at length {len(sequence)} (coverage: {current_coverage:.4f})")
+                    break
+                elif no_progress_counter > (150 if self.aim_for_full_coverage else 75):
+                    print(f"Breaking due to no coverage progress at length {len(sequence)} (coverage: {current_coverage:.4f})")
                     break
                 
                 self.visited_states.add(state_tuple)
@@ -354,7 +399,7 @@ class MaximalRCAGenerator:
                 last_coverage = current_coverage
                 
                 # Progress reporting with better metrics
-                if i % (50 if self.aim_for_full_coverage else 100) == 0:
+                if i % (25 if self.aim_for_full_coverage else 50) == 0:
                     unique_rules = len(set(sequence))
                     rule_diversity = unique_rules / len(sequence)
                     print(f"Length {i}: Coverage {current_coverage:.4f} ({len(self.visited_states)}/{self.max_states if self.aim_for_full_coverage else 'target'}), "
@@ -409,34 +454,34 @@ class MaximalRCAGenerator:
 
 # Example usage
 if __name__ == "__main__":
-    print("=== MAXIMAL-LENGTH RCA GENERATOR ===\n")
+    print("=== FIXED MAXIMAL-LENGTH RCA GENERATOR ===\n")
     
-    # Example 1: Small state space with full coverage
-    print("Example 1: Full coverage on small state space")
+    # Example 1: Small state space with debugging
+    print("Example 1: Small state space with enhanced scoring")
     print("-" * 50)
-    small_generator = MaximalRCAGenerator(n_cells=4, coverage_bonus=3.0, diversity_weight=0.1)
-    sequence = small_generator.generate_maximal_rca("III", initial_strategy="class_based")
+    small_generator = MaximalRCAGenerator(n_cells=3, coverage_bonus=5.0, diversity_weight=0.2)
+    sequence = small_generator.generate_maximal_rca("III", initial_strategy="diverse", max_length=150)
     
     properties = small_generator.analyze_sequence_properties(sequence)
     print(f"Results: Length={properties['length']}, Coverage={properties['state_coverage']:.4f}")
-    print(f"Sequence preview: {sequence[:15]}...")
+    print(f"Unique states: {properties['unique_states_visited']}/{small_generator.max_states}")
+    print(f"Rule diversity: {properties['rule_diversity']:.3f}")
     
-    # Example 2: Larger state space with optimized exploration
-    print("\n\nExample 2: Optimized exploration on larger state space")
+    # Example 2: Medium state space  
+    print("\n\nExample 2: Medium state space")
     print("-" * 50)
-    large_generator = MaximalRCAGenerator(n_cells=6, coverage_bonus=5.0, diversity_weight=0.15)
-    sequence2 = large_generator.generate_maximal_rca("II", max_length=1000, initial_strategy="diverse")
+    med_generator = MaximalRCAGenerator(n_cells=4, coverage_bonus=3.0, diversity_weight=0.15)
+    sequence2 = med_generator.generate_maximal_rca("II", max_length=500, initial_strategy="class_based")
     
-    properties2 = large_generator.analyze_sequence_properties(sequence2)
+    properties2 = med_generator.analyze_sequence_properties(sequence2)
     print(f"Results: Length={properties2['length']}, Coverage={properties2['state_coverage']:.4f}")
-    print(f"Unique states visited: {properties2['unique_states_visited']}")
+    print(f"Unique states: {properties2['unique_states_visited']}/{med_generator.max_states}")
     
-    # Example 3: Strategy comparison
-    print("\n\nExample 3: Comparing initial state strategies")
+    # Example 3: Compare just two strategies quickly
+    print("\n\nExample 3: Strategy comparison")
     print("-" * 50)
-    strategies = ["alternating", "class_based", "diverse", "random"]
-    for strategy in strategies:
-        gen = MaximalRCAGenerator(n_cells=5, coverage_bonus=2.5, diversity_weight=0.1)
-        seq = gen.generate_maximal_rca("I", max_length=300, initial_strategy=strategy)
+    for strategy in ["class_based", "diverse"]:
+        gen = MaximalRCAGenerator(n_cells=4, coverage_bonus=4.0, diversity_weight=0.1)
+        seq = gen.generate_maximal_rca("I", max_length=200, initial_strategy=strategy)
         coverage = len(gen.visited_states) / gen.max_states
-        print(f"{strategy:12}: Length={len(seq):3d}, Coverage={coverage:.4f}")
+        print(f"{strategy:12}: Length={len(seq):3d}, Coverage={coverage:.4f}, States={len(gen.visited_states)}/{gen.max_states}")
