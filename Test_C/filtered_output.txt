@@ -1,0 +1,310 @@
+CA Configuration Class Filter
+============================================================
+Enter configurations (format: Rules: n1 n2 n3 ...)
+Enter 'N=X' to specify number of cells
+Press Ctrl+D (Linux/Mac) or Ctrl+Z (Windows) when done
+
+============================================================
+N = 4
+============================================================
+
+Rules: 90 150 90 150
+Classes: DC, II, I, DC
+
+Rules: 150 150 90 150
+Classes: DC, III, II, DC
+
+--- Summary ---
+Configurations with Class II or V: 2
+
+============================================================
+N = 5
+============================================================
+
+Rules: 150 150 90 90 90
+Classes: DC, III, II, I, DC
+
+Rules: 90 150 150 90 90
+Classes: DC, II, I, III, DC
+
+Rules: 150 150 150 90 90
+Classes: DC, III, II, I, DC
+
+Rules: 90 90 150 150 90
+Classes: DC, II, I, III, DC
+
+Rules: 150 150 150 150 90
+Classes: DC, III, II, I, DC
+
+Rules: 90 90 90 90 150
+Classes: DC, II, I, II, DC
+
+Rules: 150 150 90 90 150
+Classes: DC, III, II, I, DC
+
+Rules: 90 90 90 150 150
+Classes: DC, II, I, II, DC
+
+Rules: 90 90 150 150 150
+Classes: DC, II, I, III, DC
+
+Rules: 90 150 150 150 150
+Classes: DC, II, I, III, DC
+
+--- Summary ---
+Configurations with Class II or V: 10
+
+============================================================
+N = 6
+============================================================
+
+Rules: 90 150 150 90 90 90
+Classes: DC, II, I, III, III, DC
+
+Rules: 150 90 150 90 150 90
+Classes: DC, III, III, II, I, DC
+
+Rules: 90 150 150 90 150 90
+Classes: DC, II, I, III, III, DC
+
+Rules: 90 90 90 150 150 90
+Classes: DC, II, I, II, I, DC
+
+Rules: 90 150 90 150 150 90
+Classes: DC, II, I, II, I, DC
+
+Rules: 150 90 150 150 150 90
+Classes: DC, III, III, II, I, DC
+
+Rules: 90 90 90 90 90 150
+Classes: DC, II, I, II, I, DC
+
+Rules: 150 90 150 90 90 150
+Classes: DC, III, III, II, I, DC
+
+Rules: 150 90 90 150 90 150
+Classes: DC, III, III, III, II, DC
+
+Rules: 90 150 90 150 90 150
+Classes: DC, II, I, II, I, DC
+
+Rules: 90 150 150 150 90 150
+Classes: DC, II, I, III, II, DC
+
+--- Summary ---
+Configurations with Class II or V: 11
+
+============================================================
+N = 7
+============================================================
+
+Rules: 90 90 150 90 90 90 90
+Classes: DC, II, I, III, III, III, DC
+
+Rules: 150 90 90 150 90 90 90
+Classes: DC, III, III, III, II, I, DC
+
+Rules: 150 150 90 150 90 90 90
+Classes: DC, III, II, I, III, III, DC
+
+Rules: 90 150 150 150 90 90 90
+Classes: DC, II, I, III, II, I, DC
+
+Rules: 90 90 90 90 150 90 90
+Classes: DC, II, I, II, I, III, DC
+
+Rules: 90 150 90 90 150 90 90
+Classes: DC, II, I, II, I, III, DC
+
+Rules: 150 90 150 90 150 90 90
+Classes: DC, III, III, II, I, III, DC
+
+Rules: 150 150 150 90 150 90 90
+Classes: DC, III, II, I, II, I, DC
+
+Rules: 90 90 150 90 90 150 90
+Classes: DC, II, I, III, III, III, DC
+
+Rules: 90 150 150 90 90 150 90
+Classes: DC, II, I, III, III, III, DC
+
+Rules: 150 150 90 150 90 150 90
+Classes: DC, III, II, I, III, III, DC
+
+Rules: 90 150 150 150 90 150 90
+Classes: DC, II, I, III, II, I, DC
+
+Rules: 90 150 90 90 150 150 90
+Classes: DC, II, I, II, I, III, DC
+
+Rules: 150 150 150 90 150 150 90
+Classes: DC, III, II, I, II, I, DC
+
+Rules: 90 90 90 150 150 150 90
+Classes: DC, II, I, II, I, III, DC
+
+Rules: 90 150 90 150 150 150 90
+Classes: DC, II, I, II, I, III, DC
+
+Rules: 150 90 150 150 150 150 90
+Classes: DC, III, III, II, I, III, DC
+
+Rules: 90 150 90 90 90 90 150
+Classes: DC, II, I, II, I, II, DC
+
+Rules: 150 90 150 90 90 90 150
+Classes: DC, III, III, II, I, II, DC
+
+Rules: 150 150 150 90 90 90 150
+Classes: DC, III, II, I, II, I, DC
+
+Rules: 90 90 90 150 90 90 150
+Classes: DC, II, I, II, I, II, DC
+
+Rules: 150 90 150 150 90 90 150
+Classes: DC, III, III, II, I, II, DC
+
+Rules: 150 90 90 90 150 90 150
+Classes: DC, III, III, III, III, II, DC
+
+Rules: 90 90 150 90 150 90 150
+Classes: DC, II, I, III, III, II, DC
+
+Rules: 150 90 90 150 150 90 150
+Classes: DC, III, III, III, II, I, DC
+
+Rules: 150 150 90 150 150 90 150
+Classes: DC, III, II, I, III, II, DC
+
+Rules: 90 150 150 150 150 90 150
+Classes: DC, II, I, III, II, I, DC
+
+Rules: 90 90 90 150 90 150 150
+Classes: DC, II, I, II, I, II, DC
+
+Rules: 90 150 90 150 90 150 150
+Classes: DC, II, I, II, I, II, DC
+
+Rules: 150 90 150 150 90 150 150
+Classes: DC, III, III, II, I, II, DC
+
+Rules: 150 150 150 150 90 150 150
+Classes: DC, III, II, I, III, III, DC
+
+Rules: 150 90 90 90 150 150 150
+Classes: DC, III, III, III, III, II, DC
+
+Rules: 90 90 150 90 150 150 150
+Classes: DC, II, I, III, III, II, DC
+
+Rules: 90 150 150 90 150 150 150
+Classes: DC, II, I, III, III, II, DC
+
+Rules: 150 150 90 150 150 150 150
+Classes: DC, III, II, I, III, II, DC
+
+--- Summary ---
+Configurations with Class II or V: 35
+
+============================================================
+N = 8
+============================================================
+
+Rules: 90 150 150 90 90 90 90 90
+Classes: DC, II, I, III, III, III, III, DC
+
+Rules: 150 150 150 150 90 90 90 90
+Classes: DC, III, II, I, III, III, III, DC
+
+Rules: 90 150 90 150 90 150 90 90
+Classes: DC, II, I, II, I, II, I, DC
+
+Rules: 150 90 150 150 90 150 90 90
+Classes: DC, III, III, II, I, II, I, DC
+
+Rules: 90 150 150 90 150 150 90 90
+Classes: DC, II, I, III, III, II, I, DC
+
+Rules: 150 90 90 150 150 150 90 90
+Classes: DC, III, III, III, II, I, III, DC
+
+Rules: 150 90 150 90 90 90 150 90
+Classes: DC, III, III, II, I, II, I, DC
+
+Rules: 150 150 90 150 90 90 150 90
+Classes: DC, III, II, I, III, III, III, DC
+
+Rules: 90 90 150 90 150 90 150 90
+Classes: DC, II, I, III, III, II, I, DC
+
+Rules: 150 150 90 150 150 90 150 90
+Classes: DC, III, II, I, III, II, I, DC
+
+Rules: 150 90 150 150 150 90 150 90
+Classes: DC, III, III, II, I, III, III, DC
+
+Rules: 150 150 150 150 150 90 150 90
+Classes: DC, III, II, I, III, II, I, DC
+
+Rules: 90 90 90 90 90 150 150 90
+Classes: DC, II, I, II, I, II, I, DC
+
+Rules: 90 90 150 150 90 150 150 90
+Classes: DC, II, I, III, II, I, III, DC
+
+Rules: 150 150 150 90 150 150 150 90
+Classes: DC, III, II, I, II, I, III, DC
+
+Rules: 150 150 90 90 150 90 90 150
+Classes: DC, III, II, I, II, I, II, DC
+
+Rules: 90 90 150 150 150 90 90 150
+Classes: DC, II, I, III, II, I, II, DC
+
+Rules: 90 150 90 90 90 150 90 150
+Classes: DC, II, I, II, I, II, I, DC
+
+Rules: 150 150 90 150 90 150 90 150
+Classes: DC, III, II, I, III, III, II, DC
+
+Rules: 90 90 150 90 150 150 90 150
+Classes: DC, II, I, III, III, II, I, DC
+
+Rules: 90 150 90 150 150 150 90 150
+Classes: DC, II, I, II, I, III, II, DC
+
+Rules: 150 90 90 150 90 90 150 150
+Classes: DC, III, III, III, II, I, II, DC
+
+Rules: 150 150 90 150 90 90 150 150
+Classes: DC, III, II, I, III, III, III, DC
+
+Rules: 90 150 90 90 150 90 150 150
+Classes: DC, II, I, II, I, III, III, DC
+
+Rules: 150 150 90 90 150 90 150 150
+Classes: DC, III, II, I, II, I, II, DC
+
+Rules: 150 90 150 90 150 90 150 150
+Classes: DC, III, III, II, I, III, III, DC
+
+Rules: 90 150 90 150 150 90 150 150
+Classes: DC, II, I, II, I, III, III, DC
+
+Rules: 90 150 150 150 90 150 150 150
+Classes: DC, II, I, III, II, I, III, DC
+
+Rules: 150 150 150 150 90 150 150 150
+Classes: DC, III, II, I, III, III, II, DC
+
+Rules: 90 90 90 90 150 150 150 150
+Classes: DC, II, I, II, I, III, II, DC
+
+Rules: 150 150 150 90 150 150 150 150
+Classes: DC, III, II, I, II, I, III, DC
+
+Rules: 90 150 90 150 150 150 150 150
+Classes: DC, II, I, II, I, III, II, DC
+
+--- Summary ---
+Configurations with Class II or V: 32

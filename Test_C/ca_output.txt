@@ -1,0 +1,532 @@
+N=4
+=========================================
+CONFIGURATIONS WITH MAXIMAL CYCLES
+=========================================
+Maximum cycle length found: 15
+
+Configuration 1:
+Rules: 150 90 150 90
+Boundary: Null
+Max cycle length: 15
+
+Configuration 2:
+Rules: 90 150 90 150
+Boundary: Null
+Max cycle length: 15
+
+Configuration 3:
+Rules: 150 150 90 150
+Boundary: Null
+Max cycle length: 15
+
+Configuration 4:
+Rules: 150 90 150 150
+Boundary: Null
+Max cycle length: 15
+
+Total configurations with maximal length: 4 out of 16
+=========================================
+
+N=5
+
+=========================================
+CONFIGURATIONS WITH MAXIMAL CYCLES
+=========================================
+Maximum cycle length found: 31
+
+Configuration 1:
+Rules: 150 90 90 90 90
+Boundary: Null
+Max cycle length: 31
+
+Configuration 2:
+Rules: 150 150 90 90 90
+Boundary: Null
+Max cycle length: 31
+
+Configuration 3:
+Rules: 90 150 150 90 90
+Boundary: Null
+Max cycle length: 31
+
+Configuration 4:
+Rules: 150 150 150 90 90
+Boundary: Null
+Max cycle length: 31
+
+Configuration 5:
+Rules: 90 90 150 150 90
+Boundary: Null
+Max cycle length: 31
+
+Configuration 6:
+Rules: 150 150 150 150 90
+Boundary: Null
+Max cycle length: 31
+
+Configuration 7:
+Rules: 90 90 90 90 150
+Boundary: Null
+Max cycle length: 31
+
+Configuration 8:
+Rules: 150 150 90 90 150
+Boundary: Null
+Max cycle length: 31
+
+Configuration 9:
+Rules: 90 90 90 150 150
+Boundary: Null
+Max cycle length: 31
+
+Configuration 10:
+Rules: 150 90 90 150 150
+Boundary: Null
+Max cycle length: 31
+
+Configuration 11:
+Rules: 90 90 150 150 150
+Boundary: Null
+Max cycle length: 31
+
+Configuration 12:
+Rules: 90 150 150 150 150
+Boundary: Null
+Max cycle length: 31
+
+Total configurations with maximal length: 12 out of 32
+=========================================
+
+
+N = 6 
+
+
+=========================================
+CONFIGURATIONS WITH MAXIMAL CYCLES
+=========================================
+Maximum cycle length found: 63
+
+Configuration 1:
+Rules: 150 90 90 90 90 90
+Boundary: Null
+Max cycle length: 63
+
+Configuration 2:
+Rules: 90 150 150 90 90 90
+Boundary: Null
+Max cycle length: 63
+
+Configuration 3:
+Rules: 150 90 150 90 150 90
+Boundary: Null
+Max cycle length: 63
+
+Configuration 4:
+Rules: 90 150 150 90 150 90
+Boundary: Null
+Max cycle length: 63
+
+Configuration 5:
+Rules: 90 90 90 150 150 90
+Boundary: Null
+Max cycle length: 63
+
+Configuration 6:
+Rules: 90 150 90 150 150 90
+Boundary: Null
+Max cycle length: 63
+
+Configuration 7:
+Rules: 150 90 150 150 150 90
+Boundary: Null
+Max cycle length: 63
+
+Configuration 8:
+Rules: 90 90 90 90 90 150
+Boundary: Null
+Max cycle length: 63
+
+Configuration 9:
+Rules: 150 90 150 90 90 150
+Boundary: Null
+Max cycle length: 63
+
+Configuration 10:
+Rules: 150 90 90 150 90 150
+Boundary: Null
+Max cycle length: 63
+
+Configuration 11:
+Rules: 90 150 90 150 90 150
+Boundary: Null
+Max cycle length: 63
+
+Configuration 12:
+Rules: 90 150 150 150 90 150
+Boundary: Null
+Max cycle length: 63
+
+Total configurations with maximal length: 12 out of 64
+=========================================
+
+N = 7
+
+
+=========================================
+CONFIGURATIONS WITH MAXIMAL CYCLES
+=========================================
+Maximum cycle length found: 127
+
+Configuration 1:
+Rules: 90 90 150 90 90 90 90
+Boundary: Null
+Max cycle length: 127
+
+Configuration 2:
+Rules: 150 90 90 150 90 90 90
+Boundary: Null
+Max cycle length: 127
+
+Configuration 3:
+Rules: 150 150 90 150 90 90 90
+Boundary: Null
+Max cycle length: 127
+
+Configuration 4:
+Rules: 90 150 150 150 90 90 90
+Boundary: Null
+Max cycle length: 127
+
+Configuration 5:
+Rules: 90 90 90 90 150 90 90
+Boundary: Null
+Max cycle length: 127
+
+Configuration 6:
+Rules: 90 150 90 90 150 90 90
+Boundary: Null
+Max cycle length: 127
+
+Configuration 7:
+Rules: 150 90 150 90 150 90 90
+Boundary: Null
+Max cycle length: 127
+
+Configuration 8:
+Rules: 150 150 150 90 150 90 90
+Boundary: Null
+Max cycle length: 127
+
+Configuration 9:
+Rules: 150 90 90 90 90 150 90
+Boundary: Null
+Max cycle length: 127
+
+Configuration 10:
+Rules: 90 90 150 90 90 150 90
+Boundary: Null
+Max cycle length: 127
+
+Configuration 11:
+Rules: 90 150 150 90 90 150 90
+Boundary: Null
+Max cycle length: 127
+
+Configuration 12:
+Rules: 150 150 90 150 90 150 90
+Boundary: Null
+Max cycle length: 127
+
+Configuration 13:
+Rules: 90 150 150 150 90 150 90
+Boundary: Null
+Max cycle length: 127
+
+Configuration 14:
+Rules: 90 150 90 90 150 150 90
+Boundary: Null
+Max cycle length: 127
+
+Configuration 15:
+Rules: 150 150 150 90 150 150 90
+Boundary: Null
+Max cycle length: 127
+
+Configuration 16:
+Rules: 90 90 90 150 150 150 90
+Boundary: Null
+Max cycle length: 127
+
+Configuration 17:
+Rules: 90 150 90 150 150 150 90
+Boundary: Null
+Max cycle length: 127
+
+Configuration 18:
+Rules: 150 90 150 150 150 150 90
+Boundary: Null
+Max cycle length: 127
+
+Configuration 19:
+Rules: 90 150 90 90 90 90 150
+Boundary: Null
+Max cycle length: 127
+
+Configuration 20:
+Rules: 150 90 150 90 90 90 150
+Boundary: Null
+Max cycle length: 127
+
+Configuration 21:
+Rules: 150 150 150 90 90 90 150
+Boundary: Null
+Max cycle length: 127
+
+Configuration 22:
+Rules: 90 90 90 150 90 90 150
+Boundary: Null
+Max cycle length: 127
+
+Configuration 23:
+Rules: 150 90 150 150 90 90 150
+Boundary: Null
+Max cycle length: 127
+
+Configuration 24:
+Rules: 150 90 90 90 150 90 150
+Boundary: Null
+Max cycle length: 127
+
+Configuration 25:
+Rules: 90 90 150 90 150 90 150
+Boundary: Null
+Max cycle length: 127
+
+Configuration 26:
+Rules: 150 90 90 150 150 90 150
+Boundary: Null
+Max cycle length: 127
+
+Configuration 27:
+Rules: 150 150 90 150 150 90 150
+Boundary: Null
+Max cycle length: 127
+
+Configuration 28:
+Rules: 90 150 150 150 150 90 150
+Boundary: Null
+Max cycle length: 127
+
+Configuration 29:
+Rules: 90 90 90 150 90 150 150
+Boundary: Null
+Max cycle length: 127
+
+Configuration 30:
+Rules: 90 150 90 150 90 150 150
+Boundary: Null
+Max cycle length: 127
+
+Configuration 31:
+Rules: 150 90 150 150 90 150 150
+Boundary: Null
+Max cycle length: 127
+
+Configuration 32:
+Rules: 150 150 150 150 90 150 150
+Boundary: Null
+Max cycle length: 127
+
+Configuration 33:
+Rules: 150 90 90 90 150 150 150
+Boundary: Null
+Max cycle length: 127
+
+Configuration 34:
+Rules: 90 90 150 90 150 150 150
+Boundary: Null
+Max cycle length: 127
+
+Configuration 35:
+Rules: 90 150 150 90 150 150 150
+Boundary: Null
+Max cycle length: 127
+
+Configuration 36:
+Rules: 150 150 90 150 150 150 150
+Boundary: Null
+Max cycle length: 127
+
+Total configurations with maximal length: 36 out of 128
+=========================================
+
+N = 8 
+
+
+=========================================
+CONFIGURATIONS WITH MAXIMAL CYCLES
+=========================================
+Maximum cycle length found: 255
+
+Configuration 1:
+Rules: 90 150 150 90 90 90 90 90
+Boundary: Null
+Max cycle length: 255
+
+Configuration 2:
+Rules: 150 150 150 150 90 90 90 90
+Boundary: Null
+Max cycle length: 255
+
+Configuration 3:
+Rules: 90 150 90 150 90 150 90 90
+Boundary: Null
+Max cycle length: 255
+
+Configuration 4:
+Rules: 150 90 150 150 90 150 90 90
+Boundary: Null
+Max cycle length: 255
+
+Configuration 5:
+Rules: 90 150 150 90 150 150 90 90
+Boundary: Null
+Max cycle length: 255
+
+Configuration 6:
+Rules: 150 90 90 150 150 150 90 90
+Boundary: Null
+Max cycle length: 255
+
+Configuration 7:
+Rules: 150 90 150 90 90 90 150 90
+Boundary: Null
+Max cycle length: 255
+
+Configuration 8:
+Rules: 150 150 90 150 90 90 150 90
+Boundary: Null
+Max cycle length: 255
+
+Configuration 9:
+Rules: 90 90 150 90 150 90 150 90
+Boundary: Null
+Max cycle length: 255
+
+Configuration 10:
+Rules: 150 150 90 150 150 90 150 90
+Boundary: Null
+Max cycle length: 255
+
+Configuration 11:
+Rules: 150 90 150 150 150 90 150 90
+Boundary: Null
+Max cycle length: 255
+
+Configuration 12:
+Rules: 150 150 150 150 150 90 150 90
+Boundary: Null
+Max cycle length: 255
+
+Configuration 13:
+Rules: 90 90 90 90 90 150 150 90
+Boundary: Null
+Max cycle length: 255
+
+Configuration 14:
+Rules: 90 90 150 150 90 150 150 90
+Boundary: Null
+Max cycle length: 255
+
+Configuration 15:
+Rules: 150 150 150 90 150 150 150 90
+Boundary: Null
+Max cycle length: 255
+
+Configuration 16:
+Rules: 150 150 90 90 150 90 90 150
+Boundary: Null
+Max cycle length: 255
+
+Configuration 17:
+Rules: 90 90 150 150 150 90 90 150
+Boundary: Null
+Max cycle length: 255
+
+Configuration 18:
+Rules: 90 150 90 90 90 150 90 150
+Boundary: Null
+Max cycle length: 255
+
+Configuration 19:
+Rules: 150 150 90 150 90 150 90 150
+Boundary: Null
+Max cycle length: 255
+
+Configuration 20:
+Rules: 90 90 150 90 150 150 90 150
+Boundary: Null
+Max cycle length: 255
+
+Configuration 21:
+Rules: 90 150 90 150 150 150 90 150
+Boundary: Null
+Max cycle length: 255
+
+Configuration 22:
+Rules: 150 90 90 150 90 90 150 150
+Boundary: Null
+Max cycle length: 255
+
+Configuration 23:
+Rules: 150 150 90 150 90 90 150 150
+Boundary: Null
+Max cycle length: 255
+
+Configuration 24:
+Rules: 90 150 90 90 150 90 150 150
+Boundary: Null
+Max cycle length: 255
+
+Configuration 25:
+Rules: 150 150 90 90 150 90 150 150
+Boundary: Null
+Max cycle length: 255
+
+Configuration 26:
+Rules: 150 90 150 90 150 90 150 150
+Boundary: Null
+Max cycle length: 255
+
+Configuration 27:
+Rules: 90 150 90 150 150 90 150 150
+Boundary: Null
+Max cycle length: 255
+
+Configuration 28:
+Rules: 90 150 150 150 90 150 150 150
+Boundary: Null
+Max cycle length: 255
+
+Configuration 29:
+Rules: 150 150 150 150 90 150 150 150
+Boundary: Null
+Max cycle length: 255
+
+Configuration 30:
+Rules: 90 90 90 90 150 150 150 150
+Boundary: Null
+Max cycle length: 255
+
+Configuration 31:
+Rules: 150 150 150 90 150 150 150 150
+Boundary: Null
+Max cycle length: 255
+
+Configuration 32:
+Rules: 90 150 90 150 150 150 150 150
+Boundary: Null
+Max cycle length: 255
+
+Total configurations with maximal length: 32 out of 256
+=========================================

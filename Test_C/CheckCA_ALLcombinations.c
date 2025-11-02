@@ -4,8 +4,7 @@
 #include <math.h>
 
 #define MAX_CELLS 10 // Maximum number of cells supported
-#define MAX_STEPS 50 // Maximum steps to detect cycles
-
+#define MAX_STEPS 1024  // or even 1024 for safety
 // Global variable for number of cells
 int CELLS;
 
@@ -14,6 +13,12 @@ typedef struct {
     int rules[MAX_CELLS];
     int boundary_type; // 0 = null, 1 = periodic
 } CA_Config;
+
+// Structure to track configurations with their max cycle lengths
+typedef struct {
+    CA_Config config;
+    int max_cycle_length;
+} ConfigResult;
 
 //---
 /*
@@ -27,7 +32,8 @@ int get_rule_value(int left, int center, int right, int rule);
 void evolve_step(int current[], int next[], CA_Config* config);
 int find_cycle(long long start_state, CA_Config* config, int* cycle_length);
 void print_state(long long state);
-void draw_state_diagram(CA_Config* config);
+int draw_state_diagram(CA_Config* config);
+void print_maximal_configs(ConfigResult* results, int total_configs, int max_length);
 
 //---
 /*
@@ -190,13 +196,15 @@ void print_state(long long state) {
  * It also provides a summary of cycle lengths.
  *
  * @param config The CA configuration.
+ * @return The maximum cycle length found in this configuration.
  */
-void draw_state_diagram(CA_Config* config) {
+int draw_state_diagram(CA_Config* config) {
     int max_states = (int)pow(2, CELLS);
     // 'visited' array tracks which states have been analyzed to avoid redundant work.
     int* visited = (int*)calloc(max_states, sizeof(int));
     // 'cycle_counts' array tallies cycles of different lengths.
     int* cycle_counts = (int*)calloc(max_states, sizeof(int));
+    int max_cycle_length = 0;
 
     printf("\n=== STATE TRANSITION DIAGRAM ===\n");
     printf("Number of cells: %d\n", CELLS);
@@ -216,6 +224,11 @@ void draw_state_diagram(CA_Config* config) {
 
         // If a cycle is found
         if (cycle_length > 0) {
+            // Track the maximum cycle length
+            if (cycle_length > max_cycle_length) {
+                max_cycle_length = cycle_length;
+            }
+
             // Trace the path and mark all states on it as visited
             int current[MAX_CELLS];
             int_to_state(start, current);
@@ -262,10 +275,47 @@ void draw_state_diagram(CA_Config* config) {
             printf("%d cycle(s) of length %d\n", cycle_counts[len], len);
         }
     }
+    printf("Maximum cycle length: %d\n", max_cycle_length);
 
     // Free dynamically allocated memory
     free(visited);
     free(cycle_counts);
+
+    return max_cycle_length;
+}
+
+/**
+ * @brief Prints all configurations that achieved the maximal cycle length.
+ *
+ * @param results Array of configuration results.
+ * @param total_configs Total number of configurations analyzed.
+ * @param max_length The maximum cycle length found across all configurations.
+ */
+void print_maximal_configs(ConfigResult* results, int total_configs, int max_length) {
+    printf("\n");
+    printf("=========================================\n");
+    printf("  CONFIGURATIONS WITH MAXIMAL CYCLES\n");
+    printf("=========================================\n");
+    printf("Maximum cycle length found: %d\n\n", max_length);
+
+    int count = 0;
+    for (int i = 0; i < total_configs; i++) {
+        if (results[i].max_cycle_length == max_length) {
+            count++;
+            printf("Configuration %d:\n", count);
+            printf("  Rules: ");
+            for (int j = 0; j < CELLS; j++) {
+                printf("%d ", results[i].config.rules[j]);
+            }
+            printf("\n  Boundary: %s\n",
+                   results[i].config.boundary_type ? "Periodic" : "Null");
+            printf("  Max cycle length: %d\n\n", results[i].max_cycle_length);
+        }
+    }
+
+    printf("Total configurations with maximal length: %d out of %d\n",
+           count, total_configs);
+    printf("=========================================\n");
 }
 
 //---
@@ -318,6 +368,10 @@ int main() {
     // Iterate through all 2^CELLS combinations of Rule 150 and 90
     int total_combinations = (int)pow(2, CELLS);
 
+    // Allocate array to store results for all configurations
+    ConfigResult* results = (ConfigResult*)malloc(total_combinations * sizeof(ConfigResult));
+    int global_max_length = 0;
+
     for (int combo_num = 0; combo_num < total_combinations; combo_num++) {
 
         // Assign rules based on the current combination number using a bitmask.
@@ -338,9 +392,24 @@ int main() {
         }
         printf("\n");
 
-        // Draw the state transition diagram for this specific rule configuration
-        draw_state_diagram(&config);
+        // Draw the state transition diagram and get the max cycle length
+        int max_cycle = draw_state_diagram(&config);
+
+        // Store the configuration and its result
+        results[combo_num].config = config;
+        results[combo_num].max_cycle_length = max_cycle;
+
+        // Track the global maximum
+        if (max_cycle > global_max_length) {
+            global_max_length = max_cycle;
+        }
     }
+
+    // Print summary of configurations with maximal cycle length
+    print_maximal_configs(results, total_combinations, global_max_length);
+
+    // Free allocated memory
+    free(results);
 
     return 0;
 }
